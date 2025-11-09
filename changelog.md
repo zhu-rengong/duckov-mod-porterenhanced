@@ -1,4 +1,7 @@
 # 1.1.0
+- Add workshop item id
+
+# 1.1.0
 - New: Added an ability unlocked after completing the "Senior Courier" quest — For every 5 hydration replenished, gain a happy buff lasting 2 seconds (Non-stackable)
 
 # 1.0.1
