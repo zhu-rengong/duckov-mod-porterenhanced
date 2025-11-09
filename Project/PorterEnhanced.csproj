@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+
+    <!-- I used https://github.com/BepInEx/BepInEx.AssemblyPublicizer to publicize some assemblies,
+    this way you can access everything normally without the use of reflection,
+    therefore this field must be set to true, otherwise without "Allow unsafe code",
+    it will throw an access violation exception during runtime when accessing private members except for types. -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <LangVersion>12.0</LangVersion>
+
+    <!-- Need to manually edit -->
+    <SteamPath>E:\Program Files (x86)\Steam</SteamPath>
+
+    <!-- No need to edit -->
+    <SteamAppId>3167020</SteamAppId>
+    <SteamUgcPath>$(SteamPath)\steamapps\workshop\content\$(SteamAppId)</SteamUgcPath>
+    <GamePath>$(SteamPath)\steamapps\common\Escape from Duckov</GamePath>
+    <RefsPath>$(GamePath)\Duckov_Data\Managed</RefsPath>
+    <PublicizedAssemblyRefsPath>$(MSBuildProjectDirectory)\Refs</PublicizedAssemblyRefsPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="$(PublicizedAssemblyRefsPath)\TeamSoda.*-publicized.dll"/>
+    <Reference Include="$(PublicizedAssemblyRefsPath)\ItemStatsSystem-publicized.dll"/>
+    <Reference Include="$(PublicizedAssemblyRefsPath)\SodaLocalization-publicized.dll"/>
+    <Reference Include="$(RefsPath)\Unity*"/>
+    <Reference Include="$(SteamUgcPath)\3589088839\0Harmony.dll"/>
+  </ItemGroup>
+
+  <Target Name="CopyFiles" AfterTargets="Build">
+    <ItemGroup>
+      <Assemblies Include="$(TargetDir)$(TargetName).dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Assemblies)" DestinationFiles="..\Content\$(TargetName).dll" />
+  </Target>
+</Project>
