@@ -1,2 +1,3 @@
 ﻿key,value,version,sheet
 PorterEnhanced_EffectDescription.FastRun,体力剩余至少[active_threshold]时，[stat_name] [stat_value],,
+PorterEnhanced_EffectDescription.FeelHappy,需要完成“资深快递员”任务：每补充[required_water]水分，获得持续[buff_duration]秒的高兴（不可叠加）,,

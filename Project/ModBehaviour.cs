@@ -9,7 +9,6 @@ namespace PorterEnhanced
     public class ModBehaviour : Duckov.Modding.ModBehaviour
     {
         private Harmony? harmony;
-        public static string HarmonyId => "com.whosyourdaddy.porterenhacned";
 
         public override void OnAfterSetup()
         {
@@ -17,13 +16,13 @@ namespace PorterEnhanced
 
             if (harmony is not null)
             {
-                harmony.UnpatchAll(HarmonyId);
+                harmony.UnpatchAll(UserDeclaredGlobal.HARMONY_ID);
             }
 
             var currentAssembly = Assembly.GetExecutingAssembly();
 
             Debug.Log($"[{nameof(PorterEnhanced)}] Start patching in ASM {currentAssembly.FullName}...");
-            harmony = new Harmony(HarmonyId);
+            harmony = new Harmony(UserDeclaredGlobal.HARMONY_ID);
             harmony.PatchAll(currentAssembly);
             foreach (var method in harmony.GetPatchedMethods())
             {
@@ -58,7 +57,7 @@ namespace PorterEnhanced
             if (harmony is not null)
             {
                 Debug.Log($"[{nameof(PorterEnhanced)}] Start unpatching...");
-                harmony.UnpatchAll(HarmonyId);
+                harmony.UnpatchAll(UserDeclaredGlobal.HARMONY_ID);
                 harmony = null;
                 Debug.Log($"[{nameof(PorterEnhanced)}] Unpatching finished!");
             }
