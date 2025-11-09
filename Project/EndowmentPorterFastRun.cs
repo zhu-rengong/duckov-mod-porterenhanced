@@ -27,24 +27,24 @@ namespace PorterEnhanced
         private void Update()
         {
             if (LevelManager.LevelInited
-                && EndowmentManager.Current is { Index: EndowmentIndex.Porter } endowmentEntry
-                && CharacterMainControl.Main is { Running: true } control
-                && control.CharacterItem is Item characterItem)
+                && CharacterMainControl.Main is not null and var control
+                && control.CharacterItem is not null and var characterItem)
             {
-                if (control.CurrentStamina / control.MaxStamina > FastRunActiveThreshold)
+                if (EndowmentManager.Current is { Index: EndowmentIndex.Porter } endowmentEntry
+                    && control.CurrentStamina / control.MaxStamina > FastRunActiveThreshold)
                 {
                     if (!modified)
                     {
                         runSpeedModifier.RemoveFromTarget();
                         characterItem.AddModifier("RunSpeed", runSpeedModifier);
-                        Debug.Log($"[{nameof(PorterEnhanced)}] Start fast running.");
+                        Debug.Log($"[{nameof(PorterEnhanced)}] Ability to fast run.");
                         modified = true;
                     }
                 }
                 else if (modified)
                 {
                     characterItem.Stats["RunSpeed"].RemoveModifier(runSpeedModifier);
-                    Debug.Log($"[{nameof(PorterEnhanced)}] Stop fast running.");
+                    Debug.Log($"[{nameof(PorterEnhanced)}] Inability to fast run.");
                     modified = false;
                 }
             }
