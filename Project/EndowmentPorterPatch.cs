@@ -54,9 +54,20 @@ namespace PorterEnhanced
                         ("[active_threshold]", EndowmentPorterFastRun.FastRunActiveThreshold.ToString("0.##%")),
                         ("[stat_name]", "Stat_RunSpeed".LocalizeToPlainText()),
                         ("[stat_value]", EndowmentPorterFastRun.FastRunModification.ToString("+0.##;-0.##;0")));
-                    __result += "\n- " + "PorterEnhanced_EffectDescription.FeelHappy".LocalizeToPlainTextWithVariables(
-                        ("[required_water]", FeelHappyRequiredWater.ToString("0")),
-                        ("[buff_duration]", FeelHappyBuffDuration.ToString("0")));
+
+                    bool isEffectActive = QuestManager.IsQuestFinished(UserDeclaredGlobal.QUEST_SENIOR_COURIER_ID);
+                    __result += "\n"
+                        + (isEffectActive ? "" : "<color=#696969>")
+                        + "- "
+                        + "PorterEnhanced_EffectDescription.FeelHappy".LocalizeToPlainTextWithVariables(
+                            ("[color_conditional]", isEffectActive ? "<color=#696969>" : "<color=#808080>"),
+                            ("[status]", isEffectActive
+                                ? $"<color=#00FF00>{"PorterEnhanced_EffectActive".LocalizeToPlainText()}</color>"
+                                : $"<color=#CC0000>{"PorterEnhanced_EffectInactive".LocalizeToPlainText()}</color>"),
+                            ("[required_water]", FeelHappyRequiredWater.ToString("0")),
+                            ("[buff_duration]", FeelHappyBuffDuration.ToString("0")))
+                        + (isEffectActive ? "" : "</color>");
+
                 }
             }
         }

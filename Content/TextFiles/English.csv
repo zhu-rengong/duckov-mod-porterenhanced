@@ -1,3 +1,5 @@
-key,value,version,sheet
+﻿key,value,version,sheet
+PorterEnhanced_EffectActive,Active,,
+PorterEnhanced_EffectInactive,Inactive,,
 PorterEnhanced_EffectDescription.FastRun,"When stamina remains at least [active_threshold], [stat_name] [stat_value]",,
-PorterEnhanced_EffectDescription.FeelHappy,"Require ""Senior Courier"" quest completed: For every [required_water] hydration replenished, gain happiness lasting [buff_duration] seconds (Non-Stackable)",,
+PorterEnhanced_EffectDescription.FeelHappy,"[color_conditional]Require ""Senior Courier"" quest completed ([status]):</color> For every [required_water] hydration replenished, gain happiness lasting [buff_duration] seconds (Non-Stackable)",,

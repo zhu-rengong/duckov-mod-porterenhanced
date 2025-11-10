@@ -1,3 +1,6 @@
+# 1.1.1
+- Improve the View->Player interaction to indicate activation status of the endowment effect.
+
 # 1.1.0
 - Add workshop item id
 
