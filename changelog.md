@@ -1,3 +1,6 @@
+# 1.2.1
+- Try to override texts using default langauge "English" if none of localization providers found for current language.
+
 # 1.2.0
 - Major adjustments to the porter endowment.
 - Localization implemented via official API override instead of tampering with the originals.

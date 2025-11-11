@@ -23,11 +23,17 @@ namespace PorterEnhanced
                 {
                     LocalizationManager.SetOverrideText(key, entry.value);
                 }
-                Debug.Log($"[{nameof(PorterEnhanced)}] Successfully overrode texts for language \"{Enum.GetName(typeof(SystemLanguage), language)}\"");
+                Debug.Log($"[{nameof(PorterEnhanced)}] Successfully overrode texts for language \"{Enum.GetName(typeof(SystemLanguage), language)}\".");
             }
             else
             {
-                Debug.LogWarning($"[{nameof(PorterEnhanced)}] No localization provider found for language \"{Enum.GetName(typeof(SystemLanguage), language)}\"");
+                Debug.LogWarning($"[{nameof(PorterEnhanced)}] No localization provider found for language \"{Enum.GetName(typeof(SystemLanguage), language)}\"!");
+
+                if (language != SystemLanguage.English)
+                {
+                    Debug.LogWarning($"[{nameof(PorterEnhanced)}] Try to override texts using default langauge \"{nameof(SystemLanguage.English)}\".");
+                    OverrideTexts(SystemLanguage.English);
+                }
             }
 
         }
