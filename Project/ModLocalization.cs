@@ -15,55 +15,56 @@ namespace PorterEnhanced
         private Dictionary<SystemLanguage, CSVFileLocalizor> AvailableModLocalizors;
 #pragma warning restore CS8618
 
-        private void Tamper(SystemLanguage? language = null, bool restore = false)
+        private void OverrideTexts(SystemLanguage language)
         {
-            LocalizationDatabase.Instance.Entries.ForEach(languageSettings =>
+            if (AvailableModLocalizors.TryGetValue(language, out var provider))
             {
-                if ((language is null || languageSettings.Language == language)
-                    && languageSettings.Provider is CSVFileLocalizor originalProvider
-                    && AvailableModLocalizors.TryGetValue(languageSettings.Language, out var incomingProvider))
+                foreach ((string key, MiniLocalizor.DataEntry entry) in provider.dic)
                 {
-                    foreach ((string key, MiniLocalizor.DataEntry entry) in incomingProvider.dic)
-                    {
-                        if (restore)
-                        {
-                            originalProvider.dic.Remove(key);
-                        }
-                        else
-                        {
-                            originalProvider.dic.TryAdd(key, entry);
-                        }
-                    }
+                    LocalizationManager.SetOverrideText(key, entry.value);
                 }
-            });
+                Debug.Log($"[{nameof(PorterEnhanced)}] Successfully overrode texts for language \"{Enum.GetName(typeof(SystemLanguage), language)}\"");
+            }
+            else
+            {
+                Debug.LogWarning($"[{nameof(PorterEnhanced)}] No localization provider found for language \"{Enum.GetName(typeof(SystemLanguage), language)}\"");
+            }
 
-            Debug.Log($"[{nameof(PorterEnhanced)}]"
-                + (restore ? " Restored localizor for" : " Injected localized texts to")
-                + (language is null ? " all languages" : $" language \"{Enum.GetName(typeof(SystemLanguage), language)}\"")
-                + " by tampering with the original.");
+        }
+
+        private void RemoveOverriddenTexts()
+        {
+            foreach (CSVFileLocalizor provider in AvailableModLocalizors.Values)
+            {
+                Debug.Log($"[{nameof(PorterEnhanced)}] Removing overrides for language \"{Enum.GetName(typeof(SystemLanguage), provider.Language)}\"");
+                foreach ((string key, MiniLocalizor.DataEntry entry) in provider.dic)
+                {
+                    LocalizationManager.RemoveOverrideText(key);
+                }
+            }
         }
 
         private void Awake()
         {
-            string modFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TextFiles");
-            AvailableModLocalizors = Directory.GetFiles(modFolder)
+            string textFilesPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TextFiles");
+            AvailableModLocalizors = Directory.GetFiles(textFilesPath)
                 .Where(file => Path.GetExtension(file).Equals(".csv", StringComparison.OrdinalIgnoreCase))
                 .Select(file => new CSVFileLocalizor(file))
                 .ToDictionary(provider => provider.Language);
 
-            Tamper(language: LocalizationManager.CurrentLanguage);
+            OverrideTexts(language: LocalizationManager.CurrentLanguage);
             LocalizationManager.OnSetLanguage += OnSetLanguage;
         }
 
         private void OnDestroy()
         {
-            Tamper(restore: true);
+            RemoveOverriddenTexts();
             LocalizationManager.OnSetLanguage -= OnSetLanguage;
         }
 
         private void OnSetLanguage(SystemLanguage language)
         {
-            Tamper(language);
+            OverrideTexts(language);
         }
     }
 }

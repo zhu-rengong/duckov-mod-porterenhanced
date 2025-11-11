@@ -47,7 +47,7 @@ namespace PorterEnhanced
             Debug.Log($"[{nameof(PorterEnhanced)}] Patching finished!");
 
             this.AddComponent<ModLocalization>();
-            this.AddComponent<EndowmentPorterFastRun>();
+            this.AddComponent<EndowmentPorterPatch>();
         }
 
         public override void OnBeforeDeactivate()

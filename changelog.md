@@ -1,3 +1,7 @@
+# 1.2.0
+- Major adjustments to the porter endowment.
+- Localization implemented via official API override instead of tampering with the originals.
+
 # 1.1.1
 - Improve the View->Player interaction to indicate activation status of the endowment effect.
 
