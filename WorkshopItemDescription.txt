@@ -15,8 +15,8 @@ Added 4 endowment effects to the porter:
 * Require "Expert Courier Il" quest completed: Walking Speed +0.3; Pet Backpack Capacity +1
 * Character's level must reach 14: For every 5 of energy or hydration replenished, gain a 9 seconds happiness effect, which cannot be stacked
 
-除此之外，还新增了一项隐藏能力，[spoiler]当你进入无法承受或超重状态时，你将的潜能将得到释放，在较长的时间内，负重临时大幅度提升。[/spoiler](于20251114更新)
-In addition, a hidden ability has been added. [spoiler]When you become overweight​ or super heavy, your potential will be unleashed, temporarily and significantly increasing your max weight​ for an extended period of time.[/spoiler](Update on 20251114)
+除此之外，还新增了一项隐藏能力，[spoiler]当你进入无法承受或超重状态时，你将的潜能将得到释放，在较长的时间内，负重临时大幅度提升，每次撤离前只触发一次。[/spoiler](于20251114更新)
+In addition, a hidden ability has been added. [spoiler]When you become overweight​ or super heavy, your potential will be unleashed, temporarily and significantly increasing your max weight​ for an extended period of time. This effect can only be triggered once before each extraction.[/spoiler](Update on 20251114)
 
 [b]Due to network issues, I am unable to reply in the comments. It always shows, "Sorry, something went wrong: The discussion forum is not available in your region."[/b]
 [b]因为网络原因，我无法在评论区中回复，它总是显示“抱歉，发生了某种错误： 讨论区在您的地区不可用。[/b]
