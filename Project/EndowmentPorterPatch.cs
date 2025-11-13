@@ -6,6 +6,7 @@ using Duckov.Quests;
 using HarmonyLib;
 using ItemStatsSystem;
 using ItemStatsSystem.Stats;
+using PorterEnhanced.Buffs;
 using SodaCraft.Localizations;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using static UnityEngine.GraphicsBuffer;
 
 namespace PorterEnhanced
@@ -39,16 +41,22 @@ namespace PorterEnhanced
 
         public static bool AreExpertCourierIIModifiersApplied;
 
+        public static Modifier PotentialUnleashedModifier = new(ModifierType.Add, 40.0f, UserDeclaredGlobal.PORTER_ENHANCED_MODIFIER_SOURCE);
+
         private void Awake()
         {
             Quest.onQuestCompleted += OnQuestCompleted;
             Debug.Log($"[{nameof(PorterEnhanced)}] Added an event handler to listen for Quest.onQuestCompleted.");
+            LevelManager.OnAfterLevelInitialized += OnAfterLevelInitialized;
+            Debug.Log($"[{nameof(PorterEnhanced)}] Added an event handler to listen for LevelManager.OnAfterLevelInitialized.");
         }
 
         private void OnDestroy()
         {
             Quest.onQuestCompleted -= OnQuestCompleted;
             Debug.Log($"[{nameof(PorterEnhanced)}] Removed the event handler for Quest.onQuestCompleted.");
+            LevelManager.OnAfterLevelInitialized -= OnAfterLevelInitialized;
+            Debug.Log($"[{nameof(PorterEnhanced)}] Removed the event handler for LevelManager.OnAfterLevelInitialized.");
         }
 
         private static void OnQuestCompleted(Quest quest)
@@ -58,6 +66,58 @@ namespace PorterEnhanced
                 && TryGetCharacterItem(characterMainControl, out var characterItem))
             {
                 ApplyExpertCourierIIModifiers(characterItem);
+            }
+        }
+
+        private static void OnAfterLevelInitialized()
+        {
+            Debug.Log($"[{nameof(PorterEnhanced)}] Handle LevelManager.OnAfterLevelInitialized.");
+            RegisterUnleashEvent();
+        }
+
+        private static void RegisterUnleashEvent()
+        {
+            Debug.Log($"[{nameof(PorterEnhanced)}] Registering Unleash event.");
+            if (LevelConfig.IsRaidMap
+                && EndowmentManager.Current is { Index: EndowmentIndex.Porter }
+                && TryGetMainCharacterMainControl(out var characterMainControl))
+            {
+                characterMainControl.GetBuffManager().onAddBuff += OnAddWeightBuff;
+                Debug.Log($"[{nameof(PorterEnhanced)}] Added a callback to the onAddBuff for check of weight-type buff.");
+            }
+
+            void OnAddWeightBuff(CharacterBuffManager characterBuffManager, Buff buff)
+            {
+                if (buff.ID == UserDeclaredGlobal.WEIGHT_OVERWEIGHT_BUFF_ID || buff.ID == UserDeclaredGlobal.WEIGHT_SUPERHEAVY_BUFF_ID)
+                {
+                    characterBuffManager.onAddBuff -= OnAddWeightBuff;
+                    if (characterBuffManager.Master is CharacterMainControl characterMainControl
+                        && TryGetCharacterItem(characterMainControl, out var characterItem))
+                    {
+                        characterMainControl.AddBuff(PorterPotentialUnleashedBuff.Prefab, characterMainControl);
+                        PotentialUnleashedModifier.RemoveFromTarget();
+                        characterItem.Stats[UserDeclaredGlobal.MAX_WEIGHT_STRING_HASH].AddModifier(PotentialUnleashedModifier);
+                        characterMainControl.Quack();
+                        characterMainControl.PopText("PorterEnhanced_PotentialUnleashed".LocalizeToPlainText());
+                        Debug.Log($"[{nameof(PorterEnhanced)}] Unleash!");
+                        characterBuffManager.onRemoveBuff += OnRemoveBuffAfterUnleash;
+                    }
+                }
+            }
+
+            void OnRemoveBuffAfterUnleash(CharacterBuffManager characterBuffManager, Buff buff)
+            {
+                if (buff.ID == UserDeclaredGlobal.PORTER_POTENTIAL_UNLEASHED_BUFF_ID)
+                {
+                    characterBuffManager.onRemoveBuff -= OnRemoveBuffAfterUnleash;
+                    if (characterBuffManager.Master is CharacterMainControl characterMainControl
+                        && TryGetCharacterItem(characterMainControl, out var characterItem))
+                    {
+                        characterMainControl.RemoveBuff(UserDeclaredGlobal.PORTER_POTENTIAL_UNLEASHED_BUFF_ID, removeOneLayer: false);
+                        characterItem.Stats[UserDeclaredGlobal.MAX_WEIGHT_STRING_HASH].RemoveModifier(PotentialUnleashedModifier);
+                        Debug.Log($"[{nameof(PorterEnhanced)}] Leash.");
+                    }
+                }
             }
         }
 
@@ -233,6 +293,8 @@ namespace PorterEnhanced
                             ("[required_amount]", FeelHappyRequiredEnergyOrWater.ToString("0.#")),
                             ("[buff_duration]", FeelHappyBuffDuration.ToString("0.#")))
                     ));
+
+                    stringBuilder.AppendLine("- ???");
 
                     __result = stringBuilder.ToString();
                 }

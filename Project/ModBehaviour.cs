@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
+using PorterEnhanced.Buffs;
 using System;
+using System.IO;
 using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +11,8 @@ namespace PorterEnhanced
     public class ModBehaviour : Duckov.Modding.ModBehaviour
     {
         private Harmony? harmony;
+
+        public static readonly string Location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         public override void OnAfterSetup()
         {
@@ -48,11 +52,21 @@ namespace PorterEnhanced
 
             this.AddComponent<ModLocalization>();
             this.AddComponent<EndowmentPorterPatch>();
+
+            Debug.Log($"[{nameof(PorterEnhanced)}] Loading textures...");
+            SpriteLoader.LoadTexture(UserDeclaredGlobal.SPRITES_BUFFS_PATH);
         }
 
         public override void OnBeforeDeactivate()
         {
             Debug.Log($"[{nameof(PorterEnhanced)}] Start deactivating...");
+
+            if (!PorterPotentialUnleashedBuff.IsPrefabNull && !PorterPotentialUnleashedBuff.Prefab.IsDestroyed())
+            {
+                Destroy(PorterPotentialUnleashedBuff.Prefab.gameObject);
+            }
+
+            SpriteLoader.ClearCache();
 
             if (harmony is not null)
             {

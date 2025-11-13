@@ -1,3 +1,7 @@
+# 1.2.2
+- New ability: when you get overweight​ or super heavy, your potential will be unleashed, temporarily and significantly increasing your max weight​ for an extended period of time.
+- Fixed incorrect csv format
+
 # 1.2.1
 - Try to override texts using default langauge "English" if none of localization providers found for current language.
 

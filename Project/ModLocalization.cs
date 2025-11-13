@@ -52,7 +52,7 @@ namespace PorterEnhanced
 
         private void Awake()
         {
-            string textFilesPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TextFiles");
+            string textFilesPath = Path.Combine(ModBehaviour.Location, "TextFiles");
             AvailableModLocalizors = Directory.GetFiles(textFilesPath)
                 .Where(file => Path.GetExtension(file).Equals(".csv", StringComparison.OrdinalIgnoreCase))
                 .Select(file => new CSVFileLocalizor(file))
