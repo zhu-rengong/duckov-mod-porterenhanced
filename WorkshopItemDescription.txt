@@ -1,32 +1,34 @@
+[h2]免责声明 | Disclaimer[/h2]
 自用模组，出问题了千万别怪我！
 For personal use only. Don't blame me if something goes wrong!
 
 [h2]介绍 | Introduction[/h2]
 
 给搬运工添加了4个天赋效果：
-* 行走速度+0.2；奔跑速度+0.2；体力+5；体力恢复+10%
-* 需要完成“资深快递员”任务：体力剩余至少75%时，奔跑速度+0.3
-* 需要完成“专家快递员-2”任务：行走速度+0.3；宠物背包容量+1
-* 需要人物等级达到14：每补充5能量或水分，获得持续9秒的高兴，不可叠加
+[olist]
+    [*]行走速度+0.2；奔跑速度+0.2；体力+5；体力恢复+10%
+    [*]需要完成“资深快递员”任务：体力剩余至少75%时，奔跑速度+0.3
+    [*]需要完成“专家快递员-2”任务：行走速度+0.3；宠物背包容量+1
+    [*]需要人物等级达到14：每补充5能量或水分，获得持续9秒的高兴，不可叠加
+[/olist]
 
-Added 4 endowment effects to the porter:
-* Walking Speed +0.2; Running Speed +0.2; Stamina +5; Stamina Recovery +10%
-* Require "Senior Courier" quest completed: When stamina remains at least 75%, Running Speed +0.3
-* Require "Expert Courier Il" quest completed: Walking Speed +0.3; Pet Backpack Capacity +1
-* Character's level must reach 14: For every 5 of energy or hydration replenished, gain a 9 seconds happiness effect, which cannot be stacked
+Added 4 endowment(talent) effects to the porter:
+[olist]
+    [*]Walking Speed +0.2; Running Speed +0.2; Stamina +5; Stamina Recovery +10%
+    [*]Require "Senior Courier" quest completed: When stamina remains at least 75%, Running Speed +0.3
+    [*]Require "Expert Courier Il" quest completed: Walking Speed +0.3; Pet Backpack Capacity +1
+    [*]Character's level must reach 14: For every 5 of energy or hydration replenished, gain a 9 seconds happiness effect, which cannot be stacked
+[/olist]
 
-除此之外，还新增了一项隐藏能力，[spoiler]当你进入无法承受或超重状态时，你将的潜能将得到释放，在较长的时间内，负重临时大幅度提升，每次撤离前只触发一次。[/spoiler](于20251114更新)
+除此之外，还新增了一项隐藏能力，[spoiler]当你进入无法承受或超重状态时，你的潜能将得到释放，在较长的时间内，负重临时大幅度提升，每次撤离前只触发一次。[/spoiler](于20251114更新)
 In addition, a hidden ability has been added. [spoiler]When you become overweight​ or super heavy, your potential will be unleashed, temporarily and significantly increasing your max weight​ for an extended period of time. This effect can only be triggered once before each extraction.[/spoiler](Update on 20251114)
-
-[b]Due to network issues, I am unable to reply in the comments. It always shows, "Sorry, something went wrong: The discussion forum is not available in your region."[/b]
-[b]因为网络原因，我无法在评论区中回复，它总是显示“抱歉，发生了某种错误： 讨论区在您的地区不可用。[/b]
 
 [h2]警告 | Warning[/h2]
 游戏本身存在一个bug，当从搬运工切换成其他天赋时，因背包容量下降而无法容纳的物品将不会被丢弃或存放进仓库中，你需要重新切换回搬运工职业或穿戴容量更高的背包（也许？）才能将它们取走。
 There is a bug in the game itself. When switching from the Porter to other endowments, items that cannot be containable due to reduced backpack capacity will not be discarded or stored in the warehouse. You need to switch back to the Porter or equip a backpack with higher capacity (maybe?) to retrieve them.
 
 [h2]关键字 | Keywords[/h2]
-[i] 天赋 , Endowment , Talent , 职业 , Job [/i]
+[i] 天赋 , Endowment , Talent , 职业 , Job , 角色, Character, 进程 , Progression[/i]
 
 [url=https://github.com/zhu-rengong/duckov-mod-porterenhanced]Github[/url]
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3602652229]Workshop Page[/url]
